@@ -1,73 +1,149 @@
 import { gql } from 'apollo-server'
 import { find, remove } from 'lodash'
 
-const contacts = [
+
+const owners = [
   {
     id: '1',
-    firstName: 'Paul',
-    lastName: 'Lam'
+    firstName: 'Steve',
+    lastName: 'Jobs'
   },
   {
     id: '2',
-    firstName: 'John',
-    lastName: 'Doe'
+    firstName: 'Elon',
+    lastName: 'Musk'
   },
   {
     id: '3',
-    firstName: 'Jane',
-    lastName: 'Smith'
+    firstName: 'Jeff',
+    lastName: 'Bezos'
+  }
+]
+
+const cars = [
+  {
+    id: '1',
+    year: '2019',
+    make: 'Toyota',
+    model: 'Supra',
+    price: '60000',
+    ownerId: '1'
+  },
+  {
+    id: '2',
+    year: '2003',
+    make: 'Honda',
+    model: 'Civic',
+    price: '30000',
+    ownerId: '1'
+  },
+  {
+    id: '3',
+    year: '1996',
+    make: 'Toyota',
+    model: '4Runner',
+    price: '40000',
+    ownerId: '1'
+  },
+  {
+    id: '4',
+    year: '2015',
+    make: 'Tesla',
+    model: 'Model 3',
+    price: '50000',
+    ownerId: '2'
+  },
+  {
+    id: '5',
+    year: '2013',
+    make: 'Tesla',
+    model: 'Model S',
+    price: '900000',
+    ownerId: '2'
+  },
+  {
+    id: '6',
+    year: '2014',
+    make: 'Tesla',
+    model: 'Model X',
+    price: '100000',
+    ownerId: '2'
+  },
+  {
+    id: '7',
+    year: '2014',
+    make: 'McLaren ',
+    model: 'F1',
+    price: '33000000',
+    ownerId: '3'
+  },
+  {
+    id: '8',
+    year: '2005',
+    make: 'Lexus',
+    model: 'LFA',
+    price: '495000',
+    ownerId: '3'
+  },
+  {
+    id: '9',
+    year: '2012',
+    make: 'Mercedes',
+    model: 'GLK',
+    price: '800000',
+    ownerId: '3'
   }
 ]
 
 const typeDefs = gql`
-  type Contact {
+  type Owner {
     id: String!
     firstName: String
     lastName: String
   }
 
   type Query {
-    contacts: [Contact]
+    owners: [Owner]
   }
 
   type Mutation {
-    addContact(id: String!, firstName: String!, lastName: String!): Contact
-    updateContact(id: String!, firstName: String!, lastName: String!): Contact
-    removeContact(id: String!): Contact
+    addOwner(id: String!, firstName: String!, lastName: String!): Owner
+    updateOwner(id: String!, firstName: String!, lastName: String!): Owner
+    removeOwner(id: String!): Owner
   }
 `
 
 const resolvers = {
   Query: {
-    contacts: () => contacts
+    owners: () => owners
   },
   Mutation: {
-    addContact: (root, args) => {
-      const newContact = {
+    addOwner: (root, args) => {
+      const newOwner = {
         id: args.id,
         firstName: args.firstName,
         lastName: args.lastName
       }
-      contacts.push(newContact)
-      return newContact
+      owners.push(newOwner)
+      return newOwner
     },
-    updateContact: (root, args) => {
-      const contact = find(contacts, { id: args.id })
-      if (!contact) {
-        throw new Error(`Couldn't find contact with id ${args.id}`)
+    updateOwner: (root, args) => {
+      const owner = find(owners, { id: args.id })
+      if (!owner) {
+        throw new Error(`Couldn't find owner with id ${args.id}`)
       }
 
-      contact.firstName = args.firstName
-      contact.lastName = args.lastName
-      return contact
+      owner.firstName = args.firstName
+      owner.lastName = args.lastName
+      return owner
     },
-    removeContact: (root, args) => {
-      const removedContact = find(contacts, { id: args.id })
-      if (!removedContact) {
-        throw new Error(`Couldn't find contact with id ${args.id}`)
+    removeOwner: (root, args) => {
+      const removedOwner = find(owners, { id: args.id })
+      if (!removedOwner) {
+        throw new Error(`Couldn't find owner with id ${args.id}`)
       }
-      remove(contacts, c => { return c.id === removedContact.id })
-      return removedContact
+      remove(owners, c => { return c.id === removedOwner.id })
+      return removedOwner
     }
   }
 }

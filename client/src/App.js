@@ -2,8 +2,8 @@ import React from 'react'
 import { ApolloClient, InMemoryCache } from 'apollo-boost'
 import { ApolloProvider } from 'react-apollo'
 import { createHttpLink } from 'apollo-link-http'
-import AddContact from './components/AddContact'
-import Contacts from './components/Contacts'
+import AddOwner from './components/AddOwner'
+import Owners from './components/Owners'
 import './App.css'
 
 const client = new ApolloClient({
@@ -15,8 +15,9 @@ const App = () => {
   return (
     <ApolloProvider client={client}>
       <div className='App'>
-        <AddContact/>
-        <Contacts />
+				<div className="AppTitle">Rich People and Cars With GraphQL</div>
+        <AddOwner/>
+        <Owners />
       </div>
     </ApolloProvider>
   )
